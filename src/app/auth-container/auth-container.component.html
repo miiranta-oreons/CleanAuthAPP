@@ -1,0 +1,36 @@
+<div class="flex flex-col h100">
+<div class="flex flex-row">
+
+    <div id="all-wrapper" class="flex flex-row">
+
+        <div id="side1" class="half-wrapper flex flex-col">
+            @if (displayRegisterForm()){
+                <app-register-form></app-register-form>
+                <div class="h100"></div>
+                <div class="the-sad-text-in-the-end flex flex-row">
+                    <p>Already have an account?</p> 
+                    <button (click)="displayRegisterForm.set(!displayRegisterForm())">Login</button>
+                </div>
+            }
+            @else{
+                <app-login-form></app-login-form>
+                <div class="h100"></div>
+                <div class="the-sad-text-in-the-end flex flex-row">
+                    <p>Don't have an account?</p> 
+                    <button (click)="displayRegisterForm.set(!displayRegisterForm())">Register</button>
+                </div>
+            }
+        </div>
+
+        <div id="side2" class="half-wrapper">
+            <app-background-animation>
+                <div>
+                    <h2 id="side2-h2">hey batman, why so serious?</h2>
+                </div>
+            </app-background-animation>
+        </div>
+
+    </div>
+    
+</div>
+</div>
