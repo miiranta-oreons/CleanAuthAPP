@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { BackgroundAnimationComponent } from "../background-animation/background-animation.component";
 
 @Component({
   selector: 'app-login-form',
-  imports: [],
+  imports: [BackgroundAnimationComponent],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss'
 })
