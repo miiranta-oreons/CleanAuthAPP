@@ -77,10 +77,12 @@
 #side1 {
     // background-color: rgba(255, 255, 255, 0);
     box-shadow: 5px 0 5px -2px rgba(0, 0, 0, 0.2);
+
+    overflow: hidden;
 }
 
 #side2 {
-    
+    overflow: hidden;
 }
 
 #side2-h2 {
@@ -89,4 +91,13 @@
     font-size: 25pt;
     padding: 10px;
     padding-bottom: 300px;
+}
+
+#title-h2 {
+    color:rgb(0, 0, 0);
+
+    font-family: "Markazi Text", serif;
+    font-size: 20pt;
+    font-weight: bolder;
+    
 }

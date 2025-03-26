@@ -1,1 +1,36 @@
-<p>register-form works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()" class="animate__animated animate__fadeIn">
+   
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password"/>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Repeat Password</mat-label>
+        <input matInput type="password" formControlName="repeatPassword"/>
+    </mat-form-field>
+
+    <div>
+
+        <mat-form-field class="name">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name"/>
+        </mat-form-field>
+
+        <mat-form-field class="age">
+            <mat-label>Age</mat-label>
+            <input matInput type="number" min="0" max="120" formControlName="age"/>
+        </mat-form-field>
+
+    </div>
+
+    <button mat-raised-button color="primary" type="submit">
+    register
+    </button> 
+
+</form>

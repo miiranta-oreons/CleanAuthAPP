@@ -1,0 +1,66 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+
+    width: 300px;
+}
+
+input {
+    color: white !important;
+
+    font-family: "Markazi Text", serif !important;
+    font-size: 15pt !important;
+}
+
+button {
+    background-color: #31b664 !important;
+    color: white !important;
+
+    font-family: "Markazi Text", serif;
+    font-size: 20pt;
+
+    height: 40px;
+
+    border: 0px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #00240d !important;
+}
+
+.name {
+    width: 220px;
+    margin-right: 14px;
+}
+
+.age {
+    width: 65px;
+}
+
+.animate__animated.animate__fadeIn {
+    --animate-duration: 0.5s;
+}
+
+::ng-deep mat-form-field label {
+    font-family: "Markazi Text", serif !important;
+    font-size: 15pt !important;
+}
+
+::ng-deep .mdc-text-field {
+    border-radius: 0px !important;
+}
+

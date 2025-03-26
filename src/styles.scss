@@ -1,8 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
 html, body { height: 100%; }
 
 body {
     margin: 0;
     padding: 0;
+
+    background: linear-gradient(100deg, rgb(30, 39, 37) 0%, rgb(14, 44, 51) 35%, rgb(36, 39, 40) 100%);
 }
+
+:root {
+    @include mat.form-field-overrides((
+        filled-caret-color: rgb(255, 255, 255),
+        filled-focus-active-indicator-color: rgb(255, 255, 255),
+        container-height: 56px,
+        filled-container-color: #09391b,
+        filled-label-text-color: rgb(255, 255, 255),
+        filled-hover-label-text-color: rgb(255, 255, 255),
+        filled-focus-label-text-color: rgb(255, 255, 255),
+    ));
+  }

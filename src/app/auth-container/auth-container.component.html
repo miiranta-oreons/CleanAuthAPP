@@ -4,10 +4,13 @@
     <div id="all-wrapper" class="flex flex-row">
 
         <div id="side1" class="half-wrapper flex flex-col">
+            <div>
+                <h2 id="title-h2">Sistema de Login Bacana</h2>
+            </div>
             @if (displayRegisterForm()){
                 <app-register-form></app-register-form>
                 <div class="h100"></div>
-                <div class="the-sad-text-in-the-end flex flex-row">
+                <div class="the-sad-text-in-the-end flex flex-row animate__animated animate__fadeIn">
                     <p>Already have an account?</p> 
                     <button (click)="displayRegisterForm.set(!displayRegisterForm())">Login</button>
                 </div>
@@ -15,7 +18,7 @@
             @else{
                 <app-login-form></app-login-form>
                 <div class="h100"></div>
-                <div class="the-sad-text-in-the-end flex flex-row">
+                <div class="the-sad-text-in-the-end flex flex-row animate__animated animate__fadeIn">
                     <p>Don't have an account?</p> 
                     <button (click)="displayRegisterForm.set(!displayRegisterForm())">Register</button>
                 </div>
