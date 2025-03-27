@@ -11,13 +11,13 @@ export class AuthService {
 
   login(email: string, password: string): boolean {
     // Simulate a login process
-    this.textboxService.openTextbox(['Login', 'Please enter your credentials', 'email', 'password', 'login']);
+    this.textboxService.openTextbox(['Login', 'email: ' + email, 'password: ' + password]);
     return true; // Simulate successful login
   }
 
   register(email: string, password: string, name: string, age: number): boolean {
     // Simulate a registration process
-    this.textboxService.openTextbox(['Register', 'Please enter your details', 'email', 'password', 'name', 'age']);
+    this.textboxService.openTextbox(['Register', 'email: ' + email, 'password: ' + password, 'name: ' + name, 'age: ' + age]);
     return true; // Simulate successful registration
   }
 
