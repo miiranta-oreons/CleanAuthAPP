@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthContainerComponent } from "../auth-container/auth-container.component";
+import { AuthContainerComponent } from "./auth-container/auth-container.component";
 
 @Component({
   selector: 'app-index-page',

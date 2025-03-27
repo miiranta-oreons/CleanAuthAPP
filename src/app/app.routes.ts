@@ -3,8 +3,8 @@ import { IndexPageComponent } from './index-page/index-page.component';
 import { LoggedPageComponent } from './logged-page/logged-page.component';
 
 export const routes: Routes = [
-
     {path: "", component: IndexPageComponent},
-    {path: "loggedin", component: LoggedPageComponent},
+    {path: "logged", component: LoggedPageComponent},
 
+    {path: "**", redirectTo: ""}
 ];

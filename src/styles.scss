@@ -18,4 +18,26 @@ body {
         filled-hover-label-text-color: rgb(255, 255, 255),
         filled-focus-label-text-color: rgb(255, 255, 255),
     ));
-  }
+
+    .success-snackbar {
+        @include mat.snack-bar-overrides((
+            container-color: rgb(0, 255, 149),
+            supporting-text-color: rgb(0, 0, 0),
+            supporting-text-font: "Markazi Text",
+            supporting-text-size: 16pt,
+            supporting-text-weight: 800,
+        ));
+        white-space: pre-wrap;
+    }
+
+    .error-snackbar {
+        @include mat.snack-bar-overrides((
+            container-color: rgb(255, 0, 0),
+            supporting-text-color: rgb(0, 0, 0),
+            supporting-text-font: "Markazi Text",
+            supporting-text-size: 16pt,
+            supporting-text-weight: 800,
+        ));
+        white-space: pre-wrap;
+    }
+}

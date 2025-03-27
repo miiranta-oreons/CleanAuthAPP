@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AuthContainerComponent } from './auth-container/auth-container.component';
+import { TextboxComponent } from './textbox/textbox.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, AuthContainerComponent],
+  imports: [RouterOutlet, TextboxComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
