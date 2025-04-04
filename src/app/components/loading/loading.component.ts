@@ -23,14 +23,17 @@ export class LoadingComponent {
     this.loadingHappening.set(true);
 
     for (let i = 0; i <= 80; i++) {
+      if(this.loadingHappening() == false) { return; }
       this.loadingElementOpacity.set(i*0.01);
       await new Promise(resolve => setTimeout(resolve, 1));
     }
   }
 
   async closeLoading(): Promise<void> {
+    let currentOpacity = this.loadingElementOpacity();
+    console.log(currentOpacity * 100);
 
-    for (let i = 80; i > 0; i--) {
+    for (let i = currentOpacity * 100; i > 0; i--) {
       this.loadingElementOpacity.set(i*0.01);
       await new Promise(resolve => setTimeout(resolve, 1));
     }

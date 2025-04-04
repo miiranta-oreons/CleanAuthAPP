@@ -7,6 +7,7 @@ import { LoginResponse } from '../models/login-response';
 import { RefreshTokensRequest } from '../models/refresh-tokens-request';
 import { RegisterRequest } from '../models/register-request';
 import { RegisterResponse } from '../models/register-response';
+import { LoadingService } from './loading.service';
 
 const AUTH_API_URL = "https://localhost:7156/";
 
@@ -16,10 +17,13 @@ const AUTH_API_URL = "https://localhost:7156/";
 export class AuthService {
   private textboxService: TextboxService = inject(TextboxService);
   private httpClient: HttpClient = inject(HttpClient);
+  private loadingService: LoadingService = inject(LoadingService);
 
   constructor() { }
 
   login(credentials: LoginRequest): Observable<LoginResponse>{
+    this.loadingService.openLoading();
+
     return this.httpClient.post<LoginResponse>(AUTH_API_URL + 'api/Auth/login', credentials)
       .pipe(
         map((response: LoginResponse) => {
@@ -29,18 +33,24 @@ export class AuthService {
           if(response.refreshToken) {
             document.cookie = `refreshToken=${response.refreshToken};`;
           }
+
+          this.loadingService.closeLoading();
           return response;
         })
       );
   }
 
   register(credentials: RegisterRequest): boolean {
+    this.loadingService.openLoading();
+
     this.httpClient.post<RegisterResponse>(AUTH_API_URL + 'api/Auth/register', credentials)
       .subscribe({
         next: (response) => {
+          this.loadingService.closeLoading();
           this.textboxService.openTextbox(['Registration', 'You have been registered successfully.']);
         },
         error: (error) => {
+          this.loadingService.closeLoading();
           this.textboxService.openWarningbox([error.error]);
         }
       });
