@@ -1,10 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button'; 
 import { AuthService } from '../../../../services/auth.service';
 import { LoginRequest } from '../../../../models/login-request';
+import { LoginResponse } from '../../../../models/login-response';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -14,6 +16,7 @@ import { LoginRequest } from '../../../../models/login-request';
 })
 export class LoginFormComponent {
   private authService: AuthService = inject(AuthService);
+  private router: Router = inject(Router);
 
   loginForm = new FormGroup({
     email: new FormControl(''),
@@ -26,6 +29,8 @@ export class LoginFormComponent {
       password: this.loginForm.value.password ?? ''
     };
 
-    this.authService.login(loginRequest);
+    this.authService.login(loginRequest).subscribe((response: LoginResponse) => {
+      this.router.navigate(['/logged']);
+    });
   }
 }

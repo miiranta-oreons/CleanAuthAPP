@@ -17,7 +17,7 @@ export class TextboxComponent {
   }
 
   openTextbox(text: string[]): void {
-    let text_concat = text.join('\n ');
+    let text_concat = text.join().split('\n').join('\n ');
     this.snackBar.open(text_concat, '', {
       duration: 3000,
       panelClass: ['success-snackbar']
@@ -25,7 +25,7 @@ export class TextboxComponent {
   }
 
   openWarningBox(text: string[]): void {
-    let text_concat = text.join('\n ');
+    let text_concat = text.join().split('\n').join('\n ');
     this.snackBar.open(text_concat, '', {
       duration: 3000,
       panelClass: ['error-snackbar']

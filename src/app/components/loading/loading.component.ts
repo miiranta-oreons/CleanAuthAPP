@@ -31,7 +31,6 @@ export class LoadingComponent {
 
   async closeLoading(): Promise<void> {
     let currentOpacity = this.loadingElementOpacity();
-    console.log(currentOpacity * 100);
 
     for (let i = currentOpacity * 100; i > 0; i--) {
       this.loadingElementOpacity.set(i*0.01);

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../../../services/auth.service';
 import { TextboxService } from '../../../../services/textbox.service';
 import { RegisterRequest } from '../../../../models/register-request';
+import { RegisterResponse } from '../../../../models/register-response';
+import { LoadingService } from '../../../../services/loading.service';
 
 
 @Component({
@@ -15,6 +17,8 @@ import { RegisterRequest } from '../../../../models/register-request';
   styleUrl: './register-form.component.scss'
 })
 export class RegisterFormComponent {
+  public switchForms = output<void>();
+
   private authService: AuthService = inject(AuthService);
   private textBoxService: TextboxService = inject(TextboxService);
 
@@ -41,7 +45,10 @@ export class RegisterFormComponent {
       password: this.registerForm.value.password ?? ''
     };
 
-    this.authService.register(registerRequest);
+    this.authService.register(registerRequest).subscribe((response: RegisterResponse) => {
+      this.switchForms.emit();
+    });
+
   }
 
 }

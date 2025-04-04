@@ -11,4 +11,10 @@ import { RegisterFormComponent } from "./register-form/register-form.component";
 })
 export class AuthContainerComponent {
   public displayRegisterForm = signal(true);
+
+  switchForms() {
+    this.displayRegisterForm.set(!this.displayRegisterForm());
+  }
 }
+
+

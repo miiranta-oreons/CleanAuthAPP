@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { TextboxService } from './textbox.service';
 import { HttpClient } from '@angular/common/http';
 import { LoginRequest } from '../models/login-request';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { LoginResponse } from '../models/login-response';
 import { RefreshTokensRequest } from '../models/refresh-tokens-request';
 import { RegisterRequest } from '../models/register-request';
@@ -15,9 +15,9 @@ const AUTH_API_URL = "https://localhost:7156/";
   providedIn: 'root'
 })
 export class AuthService {
-  private textboxService: TextboxService = inject(TextboxService);
   private httpClient: HttpClient = inject(HttpClient);
   private loadingService: LoadingService = inject(LoadingService);
+  private textBoxService: TextboxService = inject(TextboxService);
 
   constructor() { }
 
@@ -26,35 +26,52 @@ export class AuthService {
 
     return this.httpClient.post<LoginResponse>(AUTH_API_URL + 'api/Auth/login', credentials)
       .pipe(
-        map((response: LoginResponse) => {
+
+        //Executed regardless of subscription
+        tap((response: LoginResponse) => {
+          this.loadingService.closeLoading();
           if(response.accessToken) {
             localStorage.setItem('accessToken', response.accessToken);
           }
           if(response.refreshToken) {
             document.cookie = `refreshToken=${response.refreshToken};`;
           }
-
+        }),
+        catchError((error) => {
           this.loadingService.closeLoading();
+          this.textBoxService.openWarningbox([error.error]);
+          return throwError(() => error);
+        }),
+
+        //Send to subscribers
+        map((response: LoginResponse) => {
           return response;
         })
       );
   }
 
-  register(credentials: RegisterRequest): boolean {
+  register(credentials: RegisterRequest): Observable<RegisterResponse> {
     this.loadingService.openLoading();
 
-    this.httpClient.post<RegisterResponse>(AUTH_API_URL + 'api/Auth/register', credentials)
-      .subscribe({
-        next: (response) => {
+    return this.httpClient.post<RegisterResponse>(AUTH_API_URL + 'api/Auth/register', credentials)
+      .pipe(
+
+        //Executed regardless of subscription
+        tap((response: RegisterResponse) => {
           this.loadingService.closeLoading();
-          this.textboxService.openTextbox(['Registration', 'You have been registered successfully.']);
-        },
-        error: (error) => {
+          this.textBoxService.openTextbox(["Registration successful!"]);
+        }),
+        catchError((error) => {
           this.loadingService.closeLoading();
-          this.textboxService.openWarningbox([error.error]);
-        }
-      });
-    return true;
+          this.textBoxService.openWarningbox([error.error]);
+          return throwError(() => error);
+        }),
+
+        //Send to subscribers
+        map((response: RegisterResponse) => {
+          return response;
+        })
+      );
   }
 
   logout(): boolean {
@@ -69,14 +86,12 @@ export class AuthService {
       }
     }
 
-    this.textboxService.openTextbox(['Logout', 'You have been logged out successfully']);
     return true;
   }
 
   refreshToken(credentials: RefreshTokensRequest): Observable<LoginResponse> {
     const refreshToken = this.getRefreshTokenFromCookie();
     if(!refreshToken) { 
-      this.textboxService.openWarningbox(['No refresh token found in cookies. Please log in again.']);
       this.logout();
       return new Observable<LoginResponse>();
     }

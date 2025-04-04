@@ -8,7 +8,7 @@
                 <h2 id="title-h2">Sistema de Login Bacana</h2>
             </div>
             @if (displayRegisterForm()){
-                <app-register-form></app-register-form>
+                <app-register-form (switchForms)="switchForms()"></app-register-form>
                 <div class="h100"></div>
                 <div class="the-sad-text-in-the-end flex flex-row animate__animated animate__fadeIn">
                     <p>Already have an account?</p> 
