@@ -17,7 +17,5 @@ export function jwtInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): 
     }
     });
 
-    console.log('clonedRequest', clonedRequest);
-    
     return next(clonedRequest);
 }
