@@ -3,7 +3,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button'; 
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
+import { LoginRequest } from '../../../../models/login-request';
 
 @Component({
   selector: 'app-login-form',
@@ -20,9 +21,11 @@ export class LoginFormComponent {
   });
 
   submitLoginForm() {
-    this.authService.login(
-      this.loginForm.value.email ?? '',
-      this.loginForm.value.password ?? ''
-    );
+    const loginRequest: LoginRequest = {
+      email: this.loginForm.value.email ?? '',
+      password: this.loginForm.value.password ?? ''
+    };
+
+    this.authService.login(loginRequest);
   }
 }

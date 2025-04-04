@@ -3,8 +3,9 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button'; 
-import { AuthService } from '../../../services/auth.service';
-import { TextboxService } from '../../../services/textbox.service';
+import { AuthService } from '../../../../services/auth.service';
+import { TextboxService } from '../../../../services/textbox.service';
+import { RegisterRequest } from '../../../../models/register-request';
 
 
 @Component({
@@ -29,16 +30,18 @@ export class RegisterFormComponent {
 
     // Check if passwords match
     if (this.registerForm.value.password !== this.registerForm.value.repeatPassword) {
-      this.textBoxService.openWarningBox(['Passwords do not match!']);
+      this.textBoxService.openWarningbox(['Passwords do not match!']);
       return;
     }
 
-    this.authService.register(
-      this.registerForm.value.email ?? '',
-      this.registerForm.value.password ?? '',
-      this.registerForm.value.name ?? '',
-      Number(this.registerForm.value.age) || 0
-    );
+    const registerRequest: RegisterRequest = {
+      name: this.registerForm.value.name ?? '',
+      age: Number(this.registerForm.value.age) || 0,
+      email: this.registerForm.value.email ?? '',
+      password: this.registerForm.value.password ?? ''
+    };
+
+    this.authService.register(registerRequest);
   }
 
 }

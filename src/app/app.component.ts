@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TextboxComponent } from './textbox/textbox.component';
-import { LoadingComponent } from "./loading/loading.component";
+import { TextboxComponent } from './components/textbox/textbox.component';
+import { LoadingComponent } from "./components/loading/loading.component";
+import { LoadingService } from './services/loading.service';
 
 @Component({
   selector: 'app-root',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TextboxComponent } from '../textbox/textbox.component';
+import { TextboxComponent } from '../components/textbox/textbox.component';
 
 const TEXTBOX_COMPONENT_ERROR = 'TextboxComponent is not initialized. Please subscribe to it first.';
 
@@ -20,7 +20,7 @@ export class TextboxService {
     this.textboxComponent.openTextbox(text);
   }
 
-  openWarningBox(text: string[]): void {
+  openWarningbox(text: string[]): void {
     if(!this.textboxComponent) {
       console.error(TEXTBOX_COMPONENT_ERROR);
       return;

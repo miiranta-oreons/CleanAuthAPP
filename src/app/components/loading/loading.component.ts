@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { NgStyle } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-loading',
@@ -9,9 +10,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './loading.component.scss'
 })
 export class LoadingComponent {
-  protected loadingHappening = signal(false);
+  private loadingService: LoadingService = inject(LoadingService);
 
+  protected loadingHappening = signal(false);
   protected loadingElementOpacity = signal(0);
+
+  constructor() {
+    this.loadingService.subscribeLoadingComponent(this);
+  }
 
   async openLoading(): Promise<void> {
     this.loadingHappening.set(true);
