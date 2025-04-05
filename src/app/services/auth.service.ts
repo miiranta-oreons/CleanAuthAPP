@@ -1,13 +1,13 @@
-import { inject, Injectable } from '@angular/core';
-import { TextboxService } from './textbox.service';
 import { HttpClient } from '@angular/common/http';
-import { LoginRequest } from '../models/login-request';
+import { inject, Injectable } from '@angular/core';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { LoginRequest } from '../models/login-request';
 import { LoginResponse } from '../models/login-response';
 import { RefreshTokensRequest } from '../models/refresh-tokens-request';
 import { RegisterRequest } from '../models/register-request';
 import { RegisterResponse } from '../models/register-response';
 import { LoadingService } from './loading.service';
+import { TextboxService } from './textbox.service';
 
 const AUTH_API_URL = "https://localhost:7156/";
 

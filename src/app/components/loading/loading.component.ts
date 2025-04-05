@@ -1,5 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
 import { NgStyle } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingService } from '../../services/loading.service';
 

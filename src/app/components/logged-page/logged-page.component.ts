@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
-import { UserDataService } from '../../services/user-data.service';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { UserDataService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-logged-page',

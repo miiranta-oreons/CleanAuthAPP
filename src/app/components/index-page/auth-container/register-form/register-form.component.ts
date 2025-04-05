@@ -1,14 +1,12 @@
 import { Component, inject, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button'; 
-import { AuthService } from '../../../../services/auth.service';
-import { TextboxService } from '../../../../services/textbox.service';
+import { MatInputModule } from '@angular/material/input';
 import { RegisterRequest } from '../../../../models/register-request';
 import { RegisterResponse } from '../../../../models/register-response';
-import { LoadingService } from '../../../../services/loading.service';
-
+import { AuthService } from '../../../../services/auth.service';
+import { TextboxService } from '../../../../services/textbox.service';
 
 @Component({
   selector: 'app-register-form',

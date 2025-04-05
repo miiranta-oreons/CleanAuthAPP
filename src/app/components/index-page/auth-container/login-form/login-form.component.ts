@@ -1,12 +1,12 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button'; 
-import { AuthService } from '../../../../services/auth.service';
+import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 import { LoginRequest } from '../../../../models/login-request';
 import { LoginResponse } from '../../../../models/login-response';
-import { Router } from '@angular/router';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-login-form',

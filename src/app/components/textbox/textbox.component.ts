@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { TextboxService } from '../../services/textbox.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TextboxService } from '../../services/textbox.service';
 
 @Component({
   selector: 'app-textbox',
