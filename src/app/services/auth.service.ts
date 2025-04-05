@@ -19,8 +19,6 @@ export class AuthService {
   private loadingService: LoadingService = inject(LoadingService);
   private textBoxService: TextboxService = inject(TextboxService);
 
-  constructor() { }
-
   login(credentials: LoginRequest): Observable<LoginResponse>{
     this.loadingService.openLoading();
 
@@ -75,8 +73,12 @@ export class AuthService {
   }
 
   logout(): boolean {
+    console.log('logged out!');
+
+    // Clear access token from local storage
     localStorage.removeItem('accessToken');
 
+    // Clear refresh token from cookies
     const cookieString = document.cookie;
     const cookieArr = cookieString.split('; ');
     for (const cookie of cookieArr) {
@@ -89,17 +91,37 @@ export class AuthService {
     return true;
   }
 
-  refreshToken(credentials: RefreshTokensRequest): Observable<LoginResponse> {
+  refreshToken(): Observable<LoginResponse> {
+    
+    // get refreshToken from cookie
     const refreshToken = this.getRefreshTokenFromCookie();
     if(!refreshToken) { 
-      this.logout();
-      return new Observable<LoginResponse>();
+      return throwError(() => new Error('No refresh token found in cookies'));
     }
 
-    credentials.refreshToken = refreshToken;
-    return this.httpClient.post<LoginResponse>(AUTH_API_URL + 'api/Auth/refresh-tokens', { refreshToken })
+    // get userId from local storage
+    const accessTokenPayload = localStorage.getItem('accessToken')?.split('.')[1];
+    const decodedPayload = JSON.parse(atob(accessTokenPayload || ''));
+    const userId = decodedPayload?.['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    if(!userId) {
+      return throwError(() => new Error('No user ID found in access token'));
+    }
+
+    const credentials: RefreshTokensRequest = {
+      UserId: userId,
+      RefreshToken: refreshToken
+    };
+
+    return this.httpClient.post<LoginResponse>(AUTH_API_URL + 'api/Auth/refresh-tokens', credentials)
       .pipe(
         map((response: LoginResponse) => {
+
+          //Error?
+          if(!response.accessToken) {
+            this.logout();
+            return response;
+          }
+
           if(response.accessToken) {
             localStorage.setItem('accessToken', response.accessToken);
           }
@@ -107,6 +129,10 @@ export class AuthService {
             document.cookie = `refreshToken=${response.refreshToken};`;
           }
           return response;
+        }),
+        catchError((error) => {
+          this.logout();
+          return throwError(() => error);
         })
       );
   }
@@ -114,14 +140,17 @@ export class AuthService {
   private getRefreshTokenFromCookie(): string | null {
     const cookieString = document.cookie;
     const cookieArr = cookieString.split('; ');
-
+  
     for (const cookie of cookieArr) {
-      const [name, value] = cookie.split('=');
+      const indexOfEqual = cookie.indexOf('=');
+      const name = cookie.substring(0, indexOfEqual);
+      const value = cookie.substring(indexOfEqual + 1);
+  
       if (name === 'refreshToken') {
         return value;
       }
     }
-
+  
     return null;
   }
 
@@ -130,5 +159,4 @@ export class AuthService {
     return accessToken !== null && accessToken !== undefined;
   }
 
-  
 }

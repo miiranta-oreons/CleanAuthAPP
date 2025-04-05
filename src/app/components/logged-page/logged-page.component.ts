@@ -14,15 +14,16 @@ export class LoggedPageComponent {
   private authService: AuthService = inject(AuthService);
   private router = inject(Router);
 
-  public userData = signal<string>('Not logged in ;(');
+  public userData = signal<string>('loading...');
   
   constructor() {
+   
     this.userDataService.fetchUserData().subscribe({
       next: (data) => {
         this.userData.set(data.message);
       },
       error: (err) => {
-        console.error(err);
+        //
       }
     });
   }

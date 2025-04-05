@@ -1,4 +1,4 @@
 export interface RefreshTokensRequest {
-    refreshToken?: string;
-    userId: string;
+    RefreshToken?: string;
+    UserId: string;
 }
