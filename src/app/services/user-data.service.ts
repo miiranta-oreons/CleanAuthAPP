@@ -19,4 +19,9 @@ export class UserDataService {
     return this.httpClient.get<UserDataResponse>(AUTH_API_URL + 'api/Auth/authenticated-only');
   }
 
+  //admin-only
+  fetchUserAdmin(): Observable<UserDataResponse> {
+    return this.httpClient.get<UserDataResponse>(AUTH_API_URL + 'api/Auth/admin-only');
+  }
+
 }

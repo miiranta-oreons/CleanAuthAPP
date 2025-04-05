@@ -1,0 +1,54 @@
+:host {
+    height: 100%;
+    display: flex;
+
+    justify-content: center;
+
+    background: linear-gradient(100deg, rgb(30, 39, 37) 0%, rgb(14, 44, 51) 35%, rgb(36, 39, 40) 100%);
+}
+
+h1 {
+    color: rgb(255, 255, 255);
+    font-family: "Markazi Text";
+    font-size: 40pt;
+    font-weight: 800;
+    text-align: center;
+
+    margin-bottom: 0;
+}
+
+h2 {
+    color: rgb(255, 255, 255);
+    font-family: "Markazi Text";
+    font-size: 20pt;
+    font-weight: 800;
+    text-align: center;
+
+    margin-top: 0;
+}
+
+button {
+    margin: 0 auto;
+    margin-top: 10px;
+    width: 200px;
+    height: 50px;
+    font-family: "Markazi Text";
+    font-size: 20pt;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+    background-color: rgb(141, 0, 0);
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(255, 56, 56);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+

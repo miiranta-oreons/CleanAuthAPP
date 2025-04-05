@@ -14,18 +14,30 @@ export class LoggedPageComponent {
   private authService: AuthService = inject(AuthService);
   private router = inject(Router);
 
-  public userData = signal<string>('loading...');
+  public userAuthenticated = signal<string>('loading...');
+  public userAdmin = signal<string>('loading...');
   
   constructor() {
    
+    //
     this.userDataService.fetchUserData().subscribe({
       next: (data) => {
-        this.userData.set(data.message);
+        this.userAuthenticated.set(data.message);
       },
       error: (err) => {
-        //
+        this.userAuthenticated.set('You are NOT authenticated!');
       }
     });
+
+    this.userDataService.fetchUserAdmin().subscribe({
+      next: (data) => {
+        this.userAdmin.set(data.message);
+      },
+      error: (err) => {
+        this.userAdmin.set('You are NOT an admin!');
+      }
+    });
+
   }
 
   logout() {

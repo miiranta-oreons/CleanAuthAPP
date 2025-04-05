@@ -1,3 +1,8 @@
-{{userData()}}
+<div>
+    <h1>{{userAuthenticated()}}</h1>
+    <h2>{{userAdmin()}}</h2>
 
-<button (click)="logout()">Logout</button>
+    <div class="button-container">
+        <button (click)="logout()">Logout</button>    
+    </div>
+</div>
