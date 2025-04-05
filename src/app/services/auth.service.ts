@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, finalize, map, Observable, share, tap, throwError } from 'rxjs';
 import { LoginRequest } from '../models/login-request';
 import { LoginResponse } from '../models/login-response';
 import { RefreshTokensRequest } from '../models/refresh-tokens-request';
@@ -8,6 +8,7 @@ import { RegisterRequest } from '../models/register-request';
 import { RegisterResponse } from '../models/register-response';
 import { LoadingService } from './loading.service';
 import { TextboxService } from './textbox.service';
+import { Router } from '@angular/router';
 
 const AUTH_API_URL = "https://localhost:7156/";
 
@@ -18,6 +19,10 @@ export class AuthService {
   private httpClient: HttpClient = inject(HttpClient);
   private loadingService: LoadingService = inject(LoadingService);
   private textBoxService: TextboxService = inject(TextboxService);
+  private router: Router = inject(Router);
+
+  private tokensRefreshing: boolean = false;
+  private refreshObservable: Observable<LoginResponse> | null = null;
 
   login(credentials: LoginRequest): Observable<LoginResponse>{
     this.loadingService.openLoading();
@@ -88,11 +93,19 @@ export class AuthService {
       }
     }
 
+    this.router.navigate(['/']);
+
     return true;
   }
 
   refreshToken(): Observable<LoginResponse> {
-    
+
+    // check if tokens are already refreshing, return same share observable if true
+    if(this.tokensRefreshing && this.refreshObservable) {
+      return this.refreshObservable;
+    }
+    this.tokensRefreshing = true;
+
     // get refreshToken from cookie
     const refreshToken = this.getRefreshTokenFromCookie();
     if(!refreshToken) { 
@@ -112,29 +125,20 @@ export class AuthService {
       RefreshToken: refreshToken
     };
 
-    return this.httpClient.post<LoginResponse>(AUTH_API_URL + 'api/Auth/refresh-tokens', credentials)
+    this.refreshObservable = this.httpClient.post<LoginResponse>(AUTH_API_URL + 'api/Auth/refresh-tokens', credentials)
       .pipe(
-        map((response: LoginResponse) => {
-
-          //Error?
-          if(!response.accessToken) {
-            this.logout();
-            return response;
-          }
-
-          if(response.accessToken) {
-            localStorage.setItem('accessToken', response.accessToken);
-          }
-          if(response.refreshToken) {
-            document.cookie = `refreshToken=${response.refreshToken};`;
-          }
-          return response;
+        tap((response: LoginResponse) => {
+          if (response.accessToken) localStorage.setItem('accessToken', response.accessToken);
+          if (response.refreshToken) document.cookie = `refreshToken=${response.refreshToken};`;
+          console.log('tokens refreshed successfully!');
         }),
-        catchError((error) => {
-          this.logout();
-          return throwError(() => error);
-        })
+        finalize(() => {
+          this.tokensRefreshing = false;
+        }),
+        share()
       );
+  
+    return this.refreshObservable;
   }
 
   private getRefreshTokenFromCookie(): string | null {
