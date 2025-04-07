@@ -13,10 +13,16 @@ html, body {
         filled-caret-color: rgb(255, 255, 255),
         filled-focus-active-indicator-color: rgb(255, 255, 255),
         container-height: 56px,
-        filled-container-color: #09391b,
+        container-vertical-padding: 0px,
+        filled-with-label-container-padding-bottom: 0px,
+        filled-container-color: #1d8545,
         filled-label-text-color: rgb(255, 255, 255),
         filled-hover-label-text-color: rgb(255, 255, 255),
         filled-focus-label-text-color: rgb(255, 255, 255),
+
+        container-text-size: 8px,
+        container-text-weight: 100,
+        subscript-text-font: "Markazi Text",
     ));
 
     @include mat.progress-spinner-overrides((

@@ -37,7 +37,7 @@
 }
 
 .the-sad-text-in-the-end p {
-    font-size: 15pt;
+    font-size: 18pt;
     font-family: "Markazi Text", serif;
     font-weight: bolder;
 
@@ -50,7 +50,7 @@
 }
 
 .the-sad-text-in-the-end button {
-    font-size: 15pt;
+    font-size: 18pt;
     text-decoration: underline;
     font-family: "Markazi Text", serif;
     font-weight: bolder;
@@ -97,7 +97,12 @@
     color:rgb(0, 0, 0);
 
     font-family: "Markazi Text", serif;
-    font-size: 20pt;
-    font-weight: bolder;
-    
+    font-size: 25pt;
+    font-weight: 100;
+
+    margin-bottom: 15px;
+    margin-top: 20px;
+
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
 }
