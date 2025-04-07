@@ -42,7 +42,7 @@ export class AuthService {
         }),
         catchError((error) => {
           this.loadingService.closeLoading();
-          this.textBoxService.openWarningbox([error.error]);
+          this.openErrorBox(error);
           return throwError(() => error);
         }),
 
@@ -66,7 +66,7 @@ export class AuthService {
         }),
         catchError((error) => {
           this.loadingService.closeLoading();
-          this.textBoxService.openWarningbox([error.error]);
+          this.openErrorBox(error);
           return throwError(() => error);
         }),
 
@@ -161,6 +161,14 @@ export class AuthService {
   isLoggedIn(): boolean {
     const accessToken = localStorage.getItem('accessToken');
     return accessToken !== null && accessToken !== undefined;
+  }
+
+  private openErrorBox(error: any): void {
+    if(typeof(error.error) === 'string') {
+      this.textBoxService.openWarningbox([error.error]);
+    } else if(typeof(error.error) === 'object') {
+      this.textBoxService.openWarningbox([error.message]);
+    }
   }
 
 }

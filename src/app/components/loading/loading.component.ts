@@ -14,6 +14,7 @@ export class LoadingComponent {
 
   protected loadingHappening = signal(false);
   protected loadingElementOpacity = signal(0);
+  protected loadingElementSpinnerOpacity = signal(1);
 
   constructor() {
     this.loadingService.subscribeLoadingComponent(this);

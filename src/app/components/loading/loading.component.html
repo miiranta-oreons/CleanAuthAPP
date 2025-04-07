@@ -1,5 +1,5 @@
 @if(loadingHappening()){
-    <div #loading id="loadingCSS" [ngStyle]="{'opacity':loadingElementOpacity()}">
+    <div #loading id="loadingCSS" [ngStyle]="{'background-color': 'rgba(144,255,255,' + loadingElementOpacity() + ')'}">
         <mat-spinner></mat-spinner>
     </div>
 }
